@@ -1,4 +1,1 @@
-Klavarog Δ
-==============
-
-Keyboard trainer "Klavarog Δ" (klava.org)
+# typerun keyboard trainer
