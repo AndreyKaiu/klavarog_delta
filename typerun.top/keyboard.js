@@ -1333,9 +1333,10 @@ function get_location() {
         } else {
                 href = '#rus_basic';
         }
-        $('#refresh').attr('href', href);
-        $.cookie('klavarog_dict', href);
-        document.location.href = href;
+		if( href == "null") href = '#rus_basic';        
+		$('#refresh').attr('href', href);
+		$.cookie('klavarog_dict', href);
+		document.location.href = location + href;
         var minutes = parseInt($('#time a').text(), 10);
         $('#time').data('minutes', minutes);
 }
