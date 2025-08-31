@@ -1269,6 +1269,8 @@ function func_kbd_hint_timer() {
                         else if (pos == 3 || pos == 8) hnum = 2;
                         else if (pos >= 4 && pos <= 7) hnum = 1;
                 }
+
+                
                 if (lr == 'l') {
                         x = x - 44 + 11 * hnum + 17;
                 } else {
@@ -1279,10 +1281,23 @@ function func_kbd_hint_timer() {
                 if (hnum == 3) y = 30;
                 if (hnum == 4) y = 15;
                 if (hnum == 0) y = 0;
-                $('#' + lr + 'hand' + hnum).css({
-                        top: top + y,
-                        left: left + x
-                }).show();
+                
+                if( window.getComputedStyle(document.body).zoom != 1 ) {
+                        let k = window.getComputedStyle(document.body).zoom;
+                        console.log("hnum="+hnum+" top="+ String(((top + y)/k)+5) + "  left=" +  String(((left + x)/k)) );                                 
+                        $('#' + lr + 'hand' + hnum).css({
+                                top: ((top + y)/k)+5,
+                                left: ((left + x)/k)
+                        }).show();
+                }
+                else {
+                        $('#' + lr + 'hand' + hnum).css({
+                                top: top + y,
+                                left: left + x
+                        }).show();
+                }
+
+                
         });
         $('div.keyboard:visible div.keys:visible div.line div.space div.sel_left, div.keyboard:visible div.keys:visible div.line div.space div.sel_right').each(function () {
                 var top = $(this).position().top;
@@ -1295,12 +1310,22 @@ function func_kbd_hint_timer() {
                         lr = 'r';
                         left_plus = 20;
                 }
-				
-						
-                $('#' + lr + 'hand' + hnum).css({
-                        top: top - 5,
-                        left: left + left_plus
-                }).show();
+
+                console.log("left_plus = " + left_plus); 
+                if( window.getComputedStyle(document.body).zoom != 1 ) {
+                         let k = window.getComputedStyle(document.body).zoom;
+                        console.log("hnum="+hnum+" top="+ String((top - 5)/k) + "  left=" +  String((left + left_plus)/k) ); 
+                        $('#' + lr + 'hand' + hnum).css({
+                                top: (top - 5)/k,
+                                left: (left + left_plus)/k
+                        }).show();
+                }
+                else {
+                        $('#' + lr + 'hand' + hnum).css({
+                                top: top - 5,
+                                left: left + left_plus
+                        }).show();
+                }
         });
 }
 
