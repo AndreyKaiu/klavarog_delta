@@ -64,30 +64,70 @@ async function LoadgetVoices() {
 	} while( voices.length == 0 || n < 100 );	
 }
 
-function say(m, rate, lng) {	
-  let msg = new SpeechSynthesisUtterance(m);
+// function say(m, rate, lng) {	
+//   let msg = new SpeechSynthesisUtterance(m);
   
-  if( lng == 'deu') {
-	msg.voice = voices[1]; // 1-Нем, 2,-амер, 3 - анг. 16 - русский
-	msg.lang = 'de-DE';
-  }
-  else if( lng == 'eng') {
-	msg.voice = voices[3]; 
-	msg.lang = 'en-US';
-  }
-  else {
-	msg.voice = voices[16];
-	msg.lang = 'ru-RU';
-  }
+//   if( lng == 'deu') {
+// 	msg.voice = voices[1]; // 1-Нем, 2,-амер, 3 - анг. 16 - русский
+// 	msg.lang = 'de-DE';
+//   }
+//   else if( lng == 'eng') {
+// 	msg.voice = voices[3]; 
+// 	msg.lang = 'en-US';
+//   }
+//   else {
+// 	msg.voice = voices[16];
+// 	msg.lang = 'ru-RU';
+//   }
    
-  //msg.voiceURI = "native";
-  msg.volume = 1;
-  msg.rate = rate;
-  msg.pitch = 1;
-  msg.text = m;  
+//   //msg.voiceURI = "native";
+//   msg.volume = 1;
+//   msg.rate = rate;
+//   msg.pitch = 1;
+//   msg.text = m;  
   
-  speechSynthesis.cancel();
-  speechSynthesis.speak(msg);
+//   speechSynthesis.cancel();
+//   speechSynthesis.speak(msg);
+// }
+
+
+function say(m, rate, lng) {
+    // Получаем доступ к списку всех доступных голосов
+    let voices = speechSynthesis.getVoices();
+    let msg = new SpeechSynthesisUtterance(m);
+    
+    // Ищем нужный голос по языку (lang)
+    let selectedVoice = null;
+    
+    if (lng == 'deu') {
+        // Ищем первый доступный немецкий голос
+        selectedVoice = voices.find(voice => voice.lang === 'de-DE' || voice.lang === 'de');
+    } else if (lng == 'eng') {
+        // Ищем первый доступный американский английский голос
+        selectedVoice = voices.find(voice => voice.lang === 'en-US');
+    } else {
+        // Ищем первый доступный русский голос
+        selectedVoice = voices.find(voice => voice.lang === 'ru-RU' || voice.lang === 'ru');
+    }
+    
+    // Если нашли нужный голос - назначаем его
+    if (selectedVoice) {
+        msg.voice = selectedVoice;
+        msg.lang = selectedVoice.lang; // Язык голоса и сообщения должны совпадать
+    } else {
+        // Если нужного голоса нет, позволяем браузеру выбрать голос по умолчанию для указанного языка
+        if (lng == 'deu') msg.lang = 'de-DE';
+        else if (lng == 'eng') msg.lang = 'en-US';
+        else msg.lang = 'ru-RU';
+        console.warn('Желаемый голос не найден. Браузер выберет голос сам для языка', msg.lang);
+    }
+    
+    msg.volume = 1;
+    msg.rate = rate;
+    msg.pitch = 1;
+    
+    speechSynthesis.cancel();
+    speechSynthesis.speak(msg);
 }
 
 
@@ -1283,8 +1323,7 @@ function func_kbd_hint_timer() {
                 if (hnum == 0) y = 0;
                 
                 if( window.getComputedStyle(document.body).zoom != 1 ) {
-                        let k = window.getComputedStyle(document.body).zoom;
-                        console.log("hnum="+hnum+" top="+ String(((top + y)/k)+5) + "  left=" +  String(((left + x)/k)) );                                 
+                        let k = window.getComputedStyle(document.body).zoom;                        
                         $('#' + lr + 'hand' + hnum).css({
                                 top: ((top + y)/k)+5,
                                 left: ((left + x)/k)
@@ -1310,11 +1349,9 @@ function func_kbd_hint_timer() {
                         lr = 'r';
                         left_plus = 20;
                 }
-
-                console.log("left_plus = " + left_plus); 
+                
                 if( window.getComputedStyle(document.body).zoom != 1 ) {
-                         let k = window.getComputedStyle(document.body).zoom;
-                        console.log("hnum="+hnum+" top="+ String((top - 5)/k) + "  left=" +  String((left + left_plus)/k) ); 
+                        let k = window.getComputedStyle(document.body).zoom;                        
                         $('#' + lr + 'hand' + hnum).css({
                                 top: (top - 5)/k,
                                 left: (left + left_plus)/k
