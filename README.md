@@ -8,7 +8,7 @@ This application was developed by KAIU based on the code https://github.com/ibnt
 - colorization of the digital block is not present.
 
 
-Changes as of 09/04/2021:
+Changes as of 08/31/2025:
 - an attempt to make smartphones for low resolutions (one of the priorities of this rework);
 - without cookies, everything to work locally, which means that it remembers everything in the browser and even its own text;
 - remembers the speed for the last game in each language, so that it could be compared;
@@ -18,7 +18,8 @@ Changes as of 09/04/2021:
 - the ability to set the repeat of the dialed line;
 - for the Russian language, a set from its own methodology (all languages ​​in one file "dict.js");
 - English with transcription (selection from the top-dictionary with a higher probability of frequent words);
-- random text only locally from stamina phrases (old, perhaps that's why [16+] put it);
+- random text only locally, phrases from proverbs;
+- corrected voiceover code, some cosmetic improvements;
 - Help implemented.
 
 Данное приложение разработано KAIU на основе кода https://github.com/ibnteo/klavarog_delta, для возможного внедрения на сайте https://typerun.top, так как были замечены мелкие упущения:
@@ -30,7 +31,7 @@ Changes as of 09/04/2021:
 - раскрашивание цифрового блока нет.
 
 
-Изменения на 04.09.2021 г.:
+Изменения на 31.08.2025 г.:
 - попытка сделать под малые разрешения смартфонов (один из приоритетов этой переделки);
 - без куков, все чтобы работало локально, а значит, запоминает все в браузере и даже свой текст;
 - запоминает скорость для прошлой игры в каждом языке, чтобы сравнить можно было;
@@ -40,5 +41,6 @@ Changes as of 09/04/2021:
 - возможность задать повтор набранной строки;
 - для русского языка набор из своей методики (все языки в одном файле "dict.js");
 - английский с транскрипцией (выбор из top-словаря с большей вероятностью частых слов);
-- случайный текст только локально из фраз стамины (старой, возможно поэтому [16+] поставил);
+- случайный текст только локально, фразы из поговорок;
+- подправлен код озвучивания, некоторые косметические улучшения;
 - реализована справка.
