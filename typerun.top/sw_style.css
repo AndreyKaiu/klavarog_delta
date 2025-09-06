@@ -270,7 +270,7 @@ margin: auto;
     #keyboard #klavarog div.space div.sel_right { border: none; background: none; margin-left: 0; margin-top: 0; }
     #numkeyboard { /*margin-left: 530px;*/ width: 220px; clear: right; margin-top: 20px; *margin-top: 0; }
     #numkeyboard div.plus { position: absolute; margin-left: 102px; *margin-left: 1px; height: 54px; line-height: 54px; zoom: 1; }
-    #numkeyboard div.enter { position: absolute; margin-left: 102px; *margin-left: 1px; height: 54px; line-height: 54px; font-size: 9px; }
+    #numkeyboard div.enter { position: absolute; margin-left: 1023px; *margin-left: 1px; height: 54px; line-height: 54px; font-size: 9px; }
     #numkeyboard div.zero { width: 53px; /*background: #ddd;*/ } 
 	#numkeyboard div.num { font-size: 9px; }
     #numkeyboard div.sys { text-align: center; }
@@ -742,10 +742,10 @@ float: left;
 font-size: 14px;
 text-transform: uppercase;
 color: #50595d;
-padding: 10px 5px 10px 5px;
+padding: 10px 5px 0px 5px;
 }
 .l-hide { display: none; }
-.lllv { padding-bottom: 16px; }
+.lllv { padding-bottom: 4px; }
 
 #dict_sel span { color: #839095; }
 #time_sel { width: 40px; margin-left: 259px; top: 60px; }

@@ -705,7 +705,7 @@ function func_left_timer() {
         var href = $('#refresh').attr('href');
         var type = href.split('_')[1];
         $('#intext').val('').data('line', null);
-        if ((!$('#text div.empty').length) || (href == '#numpad') || (type == 'num') || (type == 'basic') || (type == 'begin') || (type == 'speed')) {
+        if ((!$('#text div.empty').length) || (href == '#numpad') || (type == 'num')  || (type == 'lesson') || (type == 'basic') || (type == 'begin') || (type == 'speed')) {
                 $('#time').data('time', null);
                 $('#time a').text($('#time').data('minutes'));
         }
@@ -921,7 +921,7 @@ function intext_check() {
                 line_errors();
                 if (intext.length >= line1.length) {
                         set_stat(line1);
-                        if (type == 'speed') {
+                        if (type == 'speed' ) {
                                 $('#question').removeClass('error');
                         }
                         for (var i = 1; i < 5; i++) {
@@ -975,7 +975,7 @@ function intext_check() {
                                 $('#text').data('sym_errors', sym_errors);
                                 $('#intext').data('errors', $('#intext').data('errors') + 1);
                         }
-                        if ((type == 'begin') && checked) {
+                        if ((type == 'begin' || type == 'lesson') && checked) {
 								if( !(sym == ' ') ) {
 									var index = $('#text div.line1 span.checked').text().replace(/ /g, ' ').split(' ').length - 1;
 									var word_indexes = $('#text').data('word_indexes');
@@ -999,7 +999,7 @@ function intext_check() {
                 }
                 $('#intext').addClass('error');
                 $('#text').addClass('error');
-                if (type == 'speed') {
+                if (type == 'speed' ) {
                         $('#question').addClass('error');
                         $('#intext').val('').data('start', null).removeClass('error');
                         $('#text').removeClass('error');
@@ -1022,7 +1022,7 @@ function intext_check() {
 function line_errors() {
         var href = $('#refresh').attr('href');
         var type = href.split('_')[1];
-        if ((type != 'speed') && (type != 'begin') && (type != 'dict') && (type != 'dictrev')) {
+        if ((type != 'speed') && (type != 'lesson') && (type != 'begin') && (type != 'dict') && (type != 'dictrev')) {
                 var sym_errors = $('#text').data('sym_errors') ? $('#text').data('sym_errors') : [];
                 var error_symbols = [];
                 for (var i in sym_errors) {
@@ -1044,7 +1044,7 @@ function line_errors() {
                         $('#text div.line' + index).html((checked ? '<span class="checked">' + text2html(checked) + '</span>' : '') + ret).removeClass('empty');
                         if ((!checked) && (!ret)) $('#text div.line' + index).addClass('empty');
                 }
-        } else if ( type == 'begin') {
+        } else if ( type == 'begin' || type == 'lesson' ) {
 			var ret1 = '';
 			var ret2 = '';
 			ret1 = $('#text div.line1 span.checked').text();
@@ -1113,7 +1113,7 @@ function set_stat(text) {
                 var sum_time = $('#intext').data('sum_time') ? $('#intext').data('sum_time') + time : time;
                 var sum_len = $('#intext').data('sum_len') ? $('#intext').data('sum_len') + len : len;
                 var sum_linelen = $('#intext').data('sum_linelen') ? $('#intext').data('sum_linelen') : 0;
-                if ((!$('#question').is('.error')) || (type == 'speed')) {
+                if ((!$('#question').is('.error')) || (type == 'speed') ) {
                         sum_linelen++;
                         $('#intext').data('sum_linelen', sum_linelen);
                 }
@@ -1139,7 +1139,7 @@ function set_stat(text) {
                 } else {
                         $('#speed .data').html((sum_len != len ? '<span class="nimp"><span title="Last characters per minute">' + Math.round(speed) + '</span> (<span title="Last words per minute">' + Math.round(speed / 5) + '</span>) / </span>' : '') + '<span title="Characters per minute">' + Math.round(sum_speed) + '</span> (<span title="Words per minute">' + Math.round(sum_speed / 5) + '</span>' + ((href != '#numpad') && (type != 'num') ? (type != 'code' ? '/<span title="Real words per minute">' + Math.round(sum_wspeed) + '</span>' : '') : '') + ')');
                 }
-                if (($('#question').css('visibility') == 'visible') || (type == 'speed')) {
+                if (($('#question').css('visibility') == 'visible') || (type == 'speed') ) {
                         var sum_lineerror = ((sum_errors / sum_linelen) * 10000) / 100;
                         $('#error .data').html('<span title="' + (lang == 'rus' || lang == 'ukr' ? 'Ошибочных ответов' : 'Error answers') + '">' + Math.round(sum_lineerror) + '%</span> (<span title="' + (lang == 'rus' || lang == 'ukr' ? 'Количество ошибок' : 'Count Errors') + '">' + sum_errors + '</span>/<span title="' + (lang == 'rus' || lang == 'ukr' ? 'Количество слов' : 'Count words') + '">' + sum_linelen + '</span>)');
                 } else {
@@ -1509,6 +1509,7 @@ function dict_start(href) {
                         //var hrefs = href.substring(1).split('_');
                         //href = '#' + hrefs[0] + '_begin';
                 }
+
                 dict_load(href.substring(1));
                 $('#intext').focus();
                 return true;
@@ -1573,7 +1574,7 @@ function dict_refresh() {
                         $('#intext').val('');
                         $('#text').data('line', '').data('index', null);
                         $('#text div').html('').addClass('empty');
-						if( type == 'begin') $('#text').data('error_indexes', []);
+						if( type == 'begin' || type == 'lesson' ) $('#text').data('error_indexes', []);
 						text_generate();
                         $('#intext').hide().fadeIn();
                         $('#text').hide().fadeIn();
@@ -1709,7 +1710,7 @@ function dict_load(name) {
 		strline = '';
         var lang = name.split('_')[0].substring(1);
         var type = name.split('_')[1];
-		if( (type == 'basic') || (type == 'begin') || (type == 'speed') || (name == 'num_begin') ) {
+		if( (type == 'basic') || (type == 'begin') || (type == 'speed') || type == 'lesson' || (name == 'num_begin') ) {
 			$('#strn').css("display", "");
 		} else {
 			$('#strn').css("display", "none");
@@ -1737,7 +1738,7 @@ function dict_load(name) {
 		$('#dict').removeClass('wait');
 		var text = dictMap.get(name);
 		if( text == "" ) { // Если некоторые пустые будут, то замена их
-				if( (name == "rus_basic") || (name == "rus_speed") ) text = dictMap.get("rus_begin");
+				if( (name == "rus_basic") || (name == "rus_speed") ) text = dictMap.get("rus_begin");                                
 				else if( (name == "eng_basic") || (name == "eng_speed") ) text = dictMap.get("eng_begin"); 
 				else if( (name == "deu_basic") || (name == "deu_speed") ) text = dictMap.get("deu_begin");
 				else if( (name == "ukr_basic") || (name == "ukr_speed") ) text = dictMap.get("ukr_begin");
@@ -1768,7 +1769,7 @@ function dict_generate(text) {
         show_keyboard();
         $('#keyboard').fadeIn();
 		text = text.replace(/[’’]/g, "'").replace(/\r/g, "\n").replace(/\n{2,}/g, "\n").replace(/\t/g, ' ').replace(/ {2,}/g, ' ').replace(/^ +/g, "").replace(/\n +/g, "\n").replace(/ +$/g, "").replace(/ +\n/g, "\n").replace(/`/g, '').replace(/^\n/, '').replace(/[«»„“]/g, '"').replace(/[-—]/g, '-').replace(/[…]/g, '...');
-		if( (type == 'begin') ) { //&& (name != 'num_begin') )
+		if( (type == 'begin' || type == 'lesson' ) ) { //&& (name != 'num_begin') )
 			text = text.replace(/\n/g, " ").replace(/ +$/g, "");
 			dict = text.split(' ');
 		} else {
@@ -1818,11 +1819,11 @@ function trim(str) {
 
 
 function text_generate() {
-		$('#text div').removeClass('WrongChoice');
+	$('#text div').removeClass('WrongChoice');
         var href = $('#refresh').attr('href');
         var lang = href.split('_')[0].substring(1);
         var type = href.split('_')[1];
-		
+        
         var end = new Date();
         var minutes = $('#time').data('minutes');
         var mperiod = 0;
@@ -1983,23 +1984,23 @@ function text_generate() {
 						//$('#text div.empty').eq(0).text(text + '¶').removeClass('empty').
                         $('#text div.empty').eq(0).text(text + ' ').removeClass('empty').data('lineAll', line).data('lineIdx', index);						
                 }
-        } else if ((type == 'speed') && is_timeend && ($('#text div.empty').length >= 5)) {
+        } else if (((type == 'speed')  ) && is_timeend && ($('#text div.empty').length >= 5)) {
                 $('#text').removeClass('penalt');
                 show_relax();
-        } else if ((type == 'speed') && ($('#text div.empty').length >= 5)) {
+        } else if (((type == 'speed')  ) && ($('#text div.empty').length >= 5)) {
                 $('#question').text('').css('visibility', 'hidden').removeClass('error');
                 $('#text div.line4, #text div.line5').html('').addClass('empty').css('visibility', 'hidden');
 				var word = '';
 				if( strI == 0 || strline == '' ) {
 					var index = rand_dict('');
 					var words = dict[index].split(' ');
-					word = words[ random(words.length) ];
-					if (random(10) == 0) word = word + ',';
-					else if (random(30) == 0) word = word + '.';
-					else if (random(60) == 0) word = word + ':';
-					else if (random(60) == 0) word = word + ';';
-					else if (random(100) == 0) word = word + '!';
-					else if (random(100) == 0) word = word + '?';
+                                        word = words[ random(words.length) ];
+                                        if (random(10) == 0) word = word + ',';
+                                        else if (random(30) == 0) word = word + '.';
+                                        else if (random(60) == 0) word = word + ':';
+                                        else if (random(60) == 0) word = word + ';';
+                                        else if (random(100) == 0) word = word + '!';
+                                        else if (random(100) == 0) word = word + '?';                                        
 					word = word + ' ';
 					strline = word;
 					strI = strn;
@@ -2009,9 +2010,9 @@ function text_generate() {
 				}
 				$('#text div.line1, #text div.line2, #text div.line3').removeClass('empty').text(word);
 				
-        } else if (type == 'speed') {
+        } else if (type == 'speed' ) {
 		}
-		else if ((type == 'begin' || type == 'basic') && is_timeend) {
+		else if (( type == 'begin' || type == 'lesson' || type == 'basic') && is_timeend) {
                 $('#text').removeClass('penalt');
                 show_relax();
         } else if (is_timeend) {
@@ -2022,7 +2023,7 @@ function text_generate() {
                         $('#text div.line4').html('').addClass('empty');
                         show_relax_text(5);
                 }
-        } else if (type == 'basic') {				
+        } else if ( type == 'basic') {				
                 $('#question').text('').css('visibility', 'hidden');
                 $('#text div').html('').addClass('empty');
                 $('#text').removeClass('penalt');
@@ -2047,12 +2048,12 @@ function text_generate() {
 				
                 line = line.substring(0, line.lastIndexOf(' ', lentextform-1)) + ' ';
                 $('#text div.line1').text(line.replace(/ /g, ' ')).removeClass('empty');
-        } else if (type == 'begin') {
+        } else if (type == 'begin' || type == 'lesson' ) {
                 $('#question').text('').css('visibility', 'hidden');
                 $('#text div').html('').addClass('empty');
                 $('#text').removeClass('penalt');
                 var line = '';
-                var error_indexes = $('#text').data('error_indexes') ? $('#text').data('error_indexes') : [];
+                var error_indexes = $('#text').data('error_indexes') ? $('#text').data('error_indexes') : [];                
                 var word_indexes = [];
 				
 				if( strI == 0 || strline == '' ) {
@@ -2062,7 +2063,7 @@ function text_generate() {
 									index = error_indexes[0];
 							} else {
 									index = random(dict.length);
-							}
+							}                                                        
 							var word = dict[ index ];
 							if (word != '') {
 									
